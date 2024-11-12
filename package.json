@@ -10,7 +10,8 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.15.2",
-    "@clerk/nextjs": "^6.2.1",
+    "@clerk/clerk-sdk-node": "^5.0.62",
+    "@clerk/nextjs": "^6.3.1",
     "@radix-ui/react-dialog": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.0",
@@ -22,6 +23,7 @@
     "qs": "^6.13.0",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "svix": "^1.40.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7"
   },

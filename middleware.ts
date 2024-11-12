@@ -1,12 +1,31 @@
-import { clerkMiddleware } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default clerkMiddleware()
+// Define public routes that do not require authentication
+const isPublicRoute = createRouteMatcher([
+  '/', 
+  '/api/webhooks/clerk', 
+  '/api/webhooks/stripe'
+]);
 
+export default clerkMiddleware(async (auth, req) => {
+  // If the request is for a public route, skip authentication
+  if (isPublicRoute(req)) {
+    return NextResponse.next();
+  }
+
+  // For all other routes, enforce authentication
+  await auth.protect();
+
+  // Proceed with the request
+  return NextResponse.next();
+});
+
+// Configuration to apply the middleware to all routes except static assets
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
-    '/(api|trpc)(.*)',
+    "/((?!_next/static|_next/image|favicon.ico).*)",  // Exclude static assets
+    "/api/(.*)",  // Apply to API routes
+    "/",  // Apply to root route
   ],
-}
+};
