@@ -24,8 +24,7 @@ export default clerkMiddleware(async (auth, req) => {
 // Configuration to apply the middleware to all routes except static assets
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico).*)",  // Exclude static assets
     "/api/(.*)",  // Apply to API routes
     "/",  // Apply to root route
   ],
-};
+};  
